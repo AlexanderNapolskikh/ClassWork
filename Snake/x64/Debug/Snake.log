@@ -1,0 +1,7 @@
+﻿  Snake.cpp
+C:\Users\Взрослая академия\Documents\Nap_olsk_36\Snake\Snake.cpp(28,29): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\Взрослая академия\Documents\Nap_olsk_36\Snake\Snake.cpp(34,50): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\Взрослая академия\Documents\Nap_olsk_36\Snake\Snake.cpp(70,45): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\Взрослая академия\Documents\Nap_olsk_36\Snake\Snake.cpp(88,45): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\Взрослая академия\Documents\Nap_olsk_36\Snake\Snake.cpp(101,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+  Snake.vcxproj -> C:\Users\Взрослая академия\Documents\Nap_olsk_36\Snake\x64\Debug\Snake.exe
