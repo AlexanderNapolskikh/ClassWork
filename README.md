@@ -1,2 +1,2 @@
-# ClassWork
+# Работа в классе
 for IT-classwork
