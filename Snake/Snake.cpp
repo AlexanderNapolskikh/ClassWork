@@ -1,8 +1,16 @@
 ﻿
 #include"Param.h"
 
-// Snake-game
+// Список направлений
+enum Dir
+{
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT
+};
 
+// Snake-game
 char** createField(int size) {
 
 	char** field = new char* [size];
@@ -25,6 +33,16 @@ void renderField(char** field, int** snake, int* fruit) {
 	// Очистка и генерация поля
 	system("cls");
 
+	int sizeF = _msize(field) / sizeof(field);
+
+	for (int i = 0; i < sizeF; i++)
+	{
+		for (int j = 0; j < sizeF; j++)
+		{
+			field[i][j] = '~';
+		}
+	}
+
 	int size = _msize(field[0]);
 
 	for (int i = 0; i < MARGIN; i++){
@@ -34,6 +52,7 @@ void renderField(char** field, int** snake, int* fruit) {
 	int sizeSnake = _msize(snake) / sizeof(snake[0]);
 
 	field[snake[0][0]][snake[0][1]] = char(2);
+
 	for (int i = 1; i < sizeSnake; i++){
 
 		field[snake[i][0]][snake[i][1]] = 'o';
@@ -97,8 +116,112 @@ bool unions(int** snake, int* fruit) {
 	return true;
 }
 
+// build _ _ _
+bool fruitEat(int** snake, int* fruit) {
+
+	if (snake[0][0] == fruit[0] && snake[0][1] == fruit[1]) {
+		return true;
+	}
+
+	return false;
+}
+// _ _ _
+
+void step(int** snake, Dir side) {
+
+	int size = _msize(snake) / sizeof(snake[0]);
+
+
+	// голова меняет позицию
+	switch (side)
+	{
+	case UP:
+
+		if (snake[0][0] - 1 == snake[1][0]) {
+			break;
+		}
+
+		// хвост меняет позицию
+		for (int i = size - 1; i > 0; i--)
+		{
+			swap(snake[i], snake[i - 1]);
+		}
+
+		if (snake[1][0] == 0) {
+			snake[0][0] = SIZE_FIELD - 1;
+		}
+		else {
+			snake[0][0] = snake[1][0] - 1;
+		}
+		snake[0][1] = snake[1][1];
+		break;
+	case DOWN:
+
+		if (snake[0][0] + 1 == snake[1][0]) {
+			break;
+		}
+
+		// хвост меняет позицию
+		for (int i = size - 1; i > 0; i--)
+		{
+			swap(snake[i], snake[i - 1]);
+		}
+
+		if (snake[1][0] == SIZE_FIELD - 1) {
+			snake[0][0] = 0;
+		}
+		else {
+			snake[0][0] = snake[1][0] + 1;
+		}
+		snake[0][1] = snake[1][1];
+		break;
+	case LEFT:
+
+		if (snake[0][1] - 1 == snake[1][1]) {
+			break;
+		}
+
+		// хвост меняет позицию
+		for (int i = size - 1; i > 0; i--)
+		{
+			swap(snake[i], snake[i - 1]);
+		}
+
+		if (snake[1][1] == 0) {
+			snake[0][1] = SIZE_FIELD - 1;
+		}
+		else {
+			snake[0][1] = snake[1][1] - 1;
+		}
+		snake[0][0] = snake[1][0];
+		break;
+	case RIGHT:
+
+		if (snake[0][1] + 1 == snake[1][1]) {
+			break;
+		}
+
+		// хвост меняет позицию
+		for (int i = size - 1; i > 0; i--)
+		{
+			swap(snake[i], snake[i - 1]);
+		}
+
+		if (snake[1][1] == SIZE_FIELD - 1) {
+			snake[0][1] = 0;
+		}
+		else {
+			snake[0][1] = snake[1][1] + 1;
+		}
+		snake[0][0] = snake[1][0];
+		break;
+	}
+
+}
+
 int main()
 {
+
 	// Snake work
 	srand(time(NULL));
 
@@ -112,10 +235,41 @@ int main()
 	do {
 		setPosition(fruit, random(0, SIZE_FIELD - 1), random(0, SIZE_FIELD - 1));
 	} while (!unions(snake, fruit));
-
+	
 	// Отрисовка
 	renderField(field, snake, fruit);
 
+	// Test code
+	while (true)
+	{
+		int side;
+		Dir sSide;
 
+		cin >> side;
+
+		switch (side)
+		{
+		case 0:
+			sSide = UP;
+			break;
+		case 1:
+			sSide = DOWN;
+			break;
+		case 2:
+			sSide = LEFT;
+			break;
+		case 3:
+			sSide = RIGHT;
+			break;
+		}
+
+		step(snake, sSide);
+
+		renderField(field, snake, fruit);
+
+	}
+
+	
+	
 
 }
