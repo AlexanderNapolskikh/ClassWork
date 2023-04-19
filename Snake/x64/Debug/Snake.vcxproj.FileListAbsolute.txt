@@ -1,1 +1,2 @@
 C:\Users\Взрослая академия\Documents\Nap_olsk_36\Snake\x64\Debug\Snake.exe
+C:\Users\Взрослая академия\Documents\Nap_olsk_36\ClassWork\Snake\x64\Debug\Snake.exe

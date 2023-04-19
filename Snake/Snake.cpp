@@ -86,6 +86,7 @@ void setPosition(int* fruit, int y, int x) {
 bool unions(int** snake, int* fruit) {
 
 	int size = _msize(snake) / sizeof(snake[0]);
+
 	for (int i = 0; i < size; i++)
 	{
 		if (snake[i][0] == fruit[0] && snake[i][1] == fruit[1]) {
@@ -98,6 +99,7 @@ bool unions(int** snake, int* fruit) {
 
 int main()
 {
+	// Snake work
 	srand(time(NULL));
 
 	// Создание объектов
