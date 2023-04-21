@@ -116,28 +116,45 @@ bool unions(int** snake, int* fruit) {
 	return true;
 }
 
-// build _ _ _
-bool fruitEat(int** snake, int* fruit) {
+void push(int**& snake, int* oldTail)
+{
+	int sizeSnake = _msize(snake) / sizeof(snake[0]);
+	int** bufSnake = new int* [sizeSnake + 1];
 
-	if (snake[0][0] == fruit[0] && snake[0][1] == fruit[1]) {
+	for (int i = 0; i < sizeSnake; i++)
+	{
+		bufSnake[i] = snake[i];
+	}
+
+	bufSnake[sizeSnake] = new int[2]{ oldTail[0], oldTail[1] };
+	delete[] snake;
+	snake = bufSnake;
+}
+
+bool eat(int** &snake, int* fruit, int* oldTail) {
+
+	// Проверка пересечения с фруктом в последующем
+	if (!unions(snake,fruit))
+	{
+		push(snake, oldTail);
 		return true;
 	}
 
 	return false;
 }
-// _ _ _
 
-void step(int** snake, Dir side) {
+int* step(int** snake, Dir side) {
 
 	int size = _msize(snake) / sizeof(snake[0]);
-
+	int* oldTail = new int[2]{ snake[size - 1][0],snake[size - 1][1] };
 
 	// голова меняет позицию
 	switch (side)
 	{
 	case UP:
 
-		if (snake[0][0] - 1 == snake[1][0]) {
+		// Прервать, если змейка хочет войти в себя.
+		if (snake[0][0] - 1 == snake[1][0] || (snake[1][0] - snake[0][0]) == (SIZE_FIELD - 1)) {
 			break;
 		}
 
@@ -157,7 +174,7 @@ void step(int** snake, Dir side) {
 		break;
 	case DOWN:
 
-		if (snake[0][0] + 1 == snake[1][0]) {
+		if (snake[0][0] + 1 == snake[1][0] || (snake[0][0] - snake[1][0]) == (SIZE_FIELD - 1)) {
 			break;
 		}
 
@@ -177,7 +194,7 @@ void step(int** snake, Dir side) {
 		break;
 	case LEFT:
 
-		if (snake[0][1] - 1 == snake[1][1]) {
+		if (snake[0][1] - 1 == snake[1][1] || (snake[1][1] - snake[0][1]) == (SIZE_FIELD - 1)) {
 			break;
 		}
 
@@ -197,7 +214,7 @@ void step(int** snake, Dir side) {
 		break;
 	case RIGHT:
 
-		if (snake[0][1] + 1 == snake[1][1]) {
+		if (snake[0][1] + 1 == snake[1][1] || (snake[0][1] - snake[1][1]) == (SIZE_FIELD - 1)) {
 			break;
 		}
 
@@ -216,7 +233,7 @@ void step(int** snake, Dir side) {
 		snake[0][0] = snake[1][0];
 		break;
 	}
-
+	return oldTail;
 }
 
 int main()
@@ -238,6 +255,9 @@ int main()
 	
 	// Отрисовка
 	renderField(field, snake, fruit);
+	
+	// Старый хвост
+	int* oldTail = nullptr;
 
 	// Test code
 	while (true)
@@ -261,12 +281,21 @@ int main()
 		case 3:
 			sSide = RIGHT;
 			break;
+		default:
+			continue;
+		}
+		
+		delete[] oldTail;
+		oldTail = step(snake, sSide);
+
+		if (eat(snake, fruit, oldTail)) {
+			do
+			{
+				setPosition(fruit, random(0, SIZE_FIELD - 1), random(0, SIZE_FIELD - 1));
+			} while (!(unions(snake, fruit)));
 		}
 
-		step(snake, sSide);
-
 		renderField(field, snake, fruit);
-
 	}
 
 	
