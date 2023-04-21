@@ -4,11 +4,25 @@
 // Список направлений
 enum Dir
 {
+	NO = -1,
 	UP,
 	DOWN,
 	LEFT,
 	RIGHT
 };
+
+// Прототипы
+char** createField(int);
+void renderField(char**, int**, int*);
+int** createSnake(int);
+void setPosition(int**, int, int);
+void setPosition(int*, int, int);
+bool gameOver(int**);
+bool unions(int**, int*);
+void push(int**&, int*);
+bool eat(int**&, int*, int*);
+int* step(int**, Dir&, Dir&);
+Dir keyboard();
 
 // Snake-game
 char** createField(int size) {
@@ -102,6 +116,22 @@ void setPosition(int* fruit, int y, int x) {
 	fruit[1] = x;
 }
 
+// Head - dead
+// Окончание игры
+bool gameOver(int** snake) {
+
+	int size = _msize(snake) / sizeof(snake[0]);
+
+	for (int i = 1; i < size; i++)
+	{
+		if (snake[i][0] == snake[0][0] && snake[i][1] == snake[0][1]) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
 bool unions(int** snake, int* fruit) {
 
 	int size = _msize(snake) / sizeof(snake[0]);
@@ -143,20 +173,24 @@ bool eat(int** &snake, int* fruit, int* oldTail) {
 	return false;
 }
 
-int* step(int** snake, Dir side) {
+int* step(int** snake, Dir &side, Dir &oldS) {
 
 	int size = _msize(snake) / sizeof(snake[0]);
 	int* oldTail = new int[2]{ snake[size - 1][0],snake[size - 1][1] };
+	
+	// Вход змейки в саму себя
+	if ((side == UP && oldS == DOWN) ||
+		(side == DOWN && oldS == UP) ||
+	 (side == RIGHT && oldS == LEFT) ||
+     (side == LEFT && oldS == RIGHT))
+	{
+		side = oldS;
+	}
 
 	// голова меняет позицию
 	switch (side)
 	{
 	case UP:
-
-		// Прервать, если змейка хочет войти в себя.
-		if (snake[0][0] - 1 == snake[1][0] || (snake[1][0] - snake[0][0]) == (SIZE_FIELD - 1)) {
-			break;
-		}
 
 		// хвост меняет позицию
 		for (int i = size - 1; i > 0; i--)
@@ -174,10 +208,6 @@ int* step(int** snake, Dir side) {
 		break;
 	case DOWN:
 
-		if (snake[0][0] + 1 == snake[1][0] || (snake[0][0] - snake[1][0]) == (SIZE_FIELD - 1)) {
-			break;
-		}
-
 		// хвост меняет позицию
 		for (int i = size - 1; i > 0; i--)
 		{
@@ -193,10 +223,6 @@ int* step(int** snake, Dir side) {
 		snake[0][1] = snake[1][1];
 		break;
 	case LEFT:
-
-		if (snake[0][1] - 1 == snake[1][1] || (snake[1][1] - snake[0][1]) == (SIZE_FIELD - 1)) {
-			break;
-		}
 
 		// хвост меняет позицию
 		for (int i = size - 1; i > 0; i--)
@@ -214,10 +240,6 @@ int* step(int** snake, Dir side) {
 		break;
 	case RIGHT:
 
-		if (snake[0][1] + 1 == snake[1][1] || (snake[0][1] - snake[1][1]) == (SIZE_FIELD - 1)) {
-			break;
-		}
-
 		// хвост меняет позицию
 		for (int i = size - 1; i > 0; i--)
 		{
@@ -230,10 +252,41 @@ int* step(int** snake, Dir side) {
 		else {
 			snake[0][1] = snake[1][1] + 1;
 		}
+
 		snake[0][0] = snake[1][0];
 		break;
+
+	default:
+		side = oldS;
 	}
+
+	oldS = side;
+
 	return oldTail;
+}
+
+Dir keyboard() {
+	
+	
+	if (_kbhit()) {
+
+		switch (_getch())
+		{
+		case 'w':
+			return UP;
+		case 's':
+			return DOWN;
+		case 'a':
+			return LEFT;
+		case 'd':
+			return RIGHT;
+		}
+	}
+	else {
+		return NO;
+	}
+
+
 }
 
 int main()
@@ -259,40 +312,39 @@ int main()
 	// Старый хвост
 	int* oldTail = nullptr;
 
+	// Текущее направление
+	Dir sSide = UP;
+	// Хранящееся направление
+	Dir buf;
+	// Прошлое направление
+	Dir oldS = sSide;
+
 	// Test code
 	while (true)
 	{
-		int side;
-		Dir sSide;
+		Sleep(SPEED);
 
-		cin >> side;
-
-		switch (side)
-		{
-		case 0:
-			sSide = UP;
-			break;
-		case 1:
-			sSide = DOWN;
-			break;
-		case 2:
-			sSide = LEFT;
-			break;
-		case 3:
-			sSide = RIGHT;
-			break;
-		default:
-			continue;
-		}
+		buf = keyboard();
 		
+		if (buf != NO) {
+			sSide = buf;
+		}
+
 		delete[] oldTail;
-		oldTail = step(snake, sSide);
+		oldTail = step(snake, sSide, oldS);
 
 		if (eat(snake, fruit, oldTail)) {
 			do
 			{
 				setPosition(fruit, random(0, SIZE_FIELD - 1), random(0, SIZE_FIELD - 1));
 			} while (!(unions(snake, fruit)));
+		}
+
+		if (gameOver(snake)) {
+
+			system("cls");
+			cout << endl << "_________GAME OVER_________" << endl;
+			break;
 		}
 
 		renderField(field, snake, fruit);

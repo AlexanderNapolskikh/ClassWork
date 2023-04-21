@@ -1,10 +1,12 @@
 ﻿  Snake.cpp
-C:\Users\Взрослая академия\Documents\Nap_olsk_36\ClassWork\Snake\Snake.cpp(36,43): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
-C:\Users\Взрослая академия\Documents\Nap_olsk_36\ClassWork\Snake\Snake.cpp(46,29): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
-C:\Users\Взрослая академия\Documents\Nap_olsk_36\ClassWork\Snake\Snake.cpp(52,50): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
-C:\Users\Взрослая академия\Documents\Nap_olsk_36\ClassWork\Snake\Snake.cpp(89,45): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
-C:\Users\Взрослая академия\Documents\Nap_olsk_36\ClassWork\Snake\Snake.cpp(107,45): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
-C:\Users\Взрослая академия\Documents\Nap_olsk_36\ClassWork\Snake\Snake.cpp(121,50): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
-C:\Users\Взрослая академия\Documents\Nap_olsk_36\ClassWork\Snake\Snake.cpp(148,45): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
-C:\Users\Взрослая академия\Documents\Nap_olsk_36\ClassWork\Snake\Snake.cpp(243,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+C:\Users\Взрослая академия\Documents\Nap_olsk_36\ClassWork\Snake\Snake.cpp(50,43): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\Взрослая академия\Documents\Nap_olsk_36\ClassWork\Snake\Snake.cpp(60,29): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\Взрослая академия\Documents\Nap_olsk_36\ClassWork\Snake\Snake.cpp(66,50): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\Взрослая академия\Documents\Nap_olsk_36\ClassWork\Snake\Snake.cpp(103,45): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\Взрослая академия\Documents\Nap_olsk_36\ClassWork\Snake\Snake.cpp(123,45): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\Взрослая академия\Documents\Nap_olsk_36\ClassWork\Snake\Snake.cpp(137,45): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\Взрослая академия\Documents\Nap_olsk_36\ClassWork\Snake\Snake.cpp(151,50): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\Взрослая академия\Documents\Nap_olsk_36\ClassWork\Snake\Snake.cpp(178,45): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\Взрослая академия\Documents\Nap_olsk_36\ClassWork\Snake\Snake.cpp(296,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+C:\Users\Взрослая академия\Documents\Nap_olsk_36\ClassWork\Snake\Snake.cpp(290): warning C4715: keyboard: значение возвращается не при всех путях выполнения
   Snake.vcxproj -> C:\Users\Взрослая академия\Documents\Nap_olsk_36\ClassWork\Snake\x64\Debug\Snake.exe
